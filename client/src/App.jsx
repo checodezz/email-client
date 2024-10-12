@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchEmails } from "./store/emailSlice";
 import { useDispatch } from "react-redux";
 import "./App.css";
@@ -14,7 +14,9 @@ function App() {
     setActiveFilter(filter);
   };
 
-  dispatch(fetchEmails(1));
+  useEffect(() => {
+    dispatch(fetchEmails(1));
+  }, [dispatch]);
 
   return (
     <>
