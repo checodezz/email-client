@@ -3,7 +3,7 @@ const Filter = ({ activeFilter, handleFilterChange }) => {
     <section>
       <p className="filter-label">Filter By:</p>
       <div className="filter-container">
-        {["Unread", "Read", "Favorites"].map((filter) => (
+        {["All", "Unread", "Read", "Favorites"].map((filter) => (
           <span
             key={filter}
             className={`filter-option ${

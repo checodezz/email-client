@@ -1,14 +1,17 @@
 import moment from "moment";
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
 import EmailDetails from "./EmailDetails";
+import { markAsRead } from "../store/emailSlice";
 
-const EmailList = () => {
+const EmailList = ({ activeFilter }) => {
+  const dispatch = useDispatch();
   const { emailList } = useSelector((state) => state.emails);
   const [selectedEmail, setSelectedEmail] = useState(null);
 
   const handleEmailClick = (email) => {
     setSelectedEmail(email);
+    dispatch(markAsRead(email.id)); // Ensure correct email ID is passed to mark it as read
   };
 
   const truncateText = (text, maxLength) => {
@@ -22,6 +25,14 @@ const EmailList = () => {
     setSelectedEmail(null);
   };
 
+  // Filter the emails based on the active filter
+  const filteredEmails = emailList.filter((email) => {
+    if (activeFilter === "Unread") return !email.isRead;
+    if (activeFilter === "Read") return email.isRead;
+    if (activeFilter === "Favorites") return email.isFavorite;
+    return true;
+  });
+
   return (
     <div className="container-fluid mt-4" aria-labelledby="email-list-title">
       <h2 id="email-list-title" className="visually-hidden">
@@ -30,14 +41,17 @@ const EmailList = () => {
       {selectedEmail ? (
         <div className="row">
           <div className="col-md-5">
-            {emailList.map((email) => (
+            {filteredEmails.map((email) => (
               <article
                 className={`email-card mb-3 d-flex align-items-start text-muted ${
                   selectedEmail.id === email.id ? "active-email" : ""
                 }`}
                 key={email.id}
                 onClick={() => handleEmailClick(email)}
-                style={{ cursor: "pointer" }}
+                style={{
+                  cursor: "pointer",
+                  backgroundColor: email.isRead ? "#f2f2f2" : "white", // Change background color based on read status
+                }}
               >
                 <figure
                   className="email-avatar img-fluid"
@@ -51,8 +65,7 @@ const EmailList = () => {
                     <span className="fw-semibold">
                       {email.from.name.charAt(0).toUpperCase() +
                         email.from.name.slice(1)}{" "}
-                      &lt;
-                      {email.from.email}&gt;
+                      &lt;{email.from.email}&gt;
                     </span>
                     <br />
                     Subject:{" "}
@@ -85,14 +98,17 @@ const EmailList = () => {
         </div>
       ) : (
         <div className="row">
-          {emailList.map((email) => (
+          {filteredEmails.map((email) => (
             <article
               className={`email-card mb-3 d-flex align-items-start text-muted ${
                 selectedEmail?.id === email.id ? "active-email" : ""
               }`}
               key={email.id}
               onClick={() => handleEmailClick(email)}
-              style={{ cursor: "pointer" }}
+              style={{
+                cursor: "pointer",
+                backgroundColor: email.isRead ? "#f2f2f2" : "white", // Change background color based on read status
+              }}
             >
               <figure
                 className="email-avatar"
@@ -106,8 +122,7 @@ const EmailList = () => {
                   <span className="fw-semibold">
                     {email.from.name.charAt(0).toUpperCase() +
                       email.from.name.slice(1)}{" "}
-                    &lt;
-                    {email.from.email}&gt;
+                    &lt;{email.from.email}&gt;
                   </span>
                   <br />
                   Subject: <span className="fw-semibold">{email.subject}</span>

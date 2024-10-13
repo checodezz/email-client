@@ -8,7 +8,7 @@ import EmailList from "./components/EmailList";
 
 function App() {
   const dispatch = useDispatch();
-  const [activeFilter, setActiveFilter] = useState("Unread");
+  const [activeFilter, setActiveFilter] = useState("All");
 
   const handleFilterChange = (filter) => {
     setActiveFilter(filter);
@@ -25,7 +25,7 @@ function App() {
           activeFilter={activeFilter}
           handleFilterChange={handleFilterChange}
         />
-        <EmailList />
+        <EmailList activeFilter={activeFilter} /> {/* Pass the filter here */}
       </main>
     </>
   );
