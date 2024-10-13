@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const saveToLocalStorage = (emailList) => {
-    localStorage.setItem("emailList", JSON.stringify(emailList));
+const saveToSessionStorage = (emailList) => {
+    sessionStorage.setItem("emailList", JSON.stringify(emailList));
 };
 
-export const loadFromLocalStorage = () => {
-    const savedEmails = localStorage.getItem("emailList");
-    console.log(savedEmails)
+export const loadFromSessionStorage = () => {
+    const savedEmails = sessionStorage.getItem("emailList");
+    console.log(savedEmails);
     return savedEmails ? JSON.parse(savedEmails) : null;
 };
 
@@ -19,7 +19,7 @@ export const fetchEmails = createAsyncThunk("emails/fetchEmails", async (page) =
 const emailSlice = createSlice({
     name: "emails",
     initialState: {
-        emailList: loadFromLocalStorage() || [],
+        emailList: loadFromSessionStorage() || [],
         loading: false,
         error: null,
         filter: 'all',
@@ -31,7 +31,7 @@ const emailSlice = createSlice({
             const email = state.emailList.find((email) => email.id == emailId);
             if (email) {
                 email.isFavorite = !email.isFavorite;
-                saveToLocalStorage(state.emailList);
+                saveToSessionStorage(state.emailList);
             }
         },
         setFilter: (state, action) => {
@@ -42,7 +42,7 @@ const emailSlice = createSlice({
             const email = state.emailList.find((email) => email.id === emailId);
             if (email) {
                 email.isRead = true;
-                saveToLocalStorage(state.emailList);
+                saveToSessionStorage(state.emailList);
             }
         },
         markAsUnread: (state, action) => {
@@ -50,7 +50,7 @@ const emailSlice = createSlice({
             const email = state.emailList.find((email) => email.id === emailId);
             if (email) {
                 email.isRead = false;
-                saveToLocalStorage(state.emailList);
+                saveToSessionStorage(state.emailList);
             }
         }
     },
@@ -69,17 +69,20 @@ const emailSlice = createSlice({
                         isRead: false,
                     }));
                 } else {
-                    state.emailList = [...state.emailList, ...emails.map((email) => ({
-                        ...email,
-                        isFavorite: false,
-                        isRead: false,
-                    }))];
+                    state.emailList = [
+                        ...state.emailList,
+                        ...emails.map((email) => ({
+                            ...email,
+                            isFavorite: false,
+                            isRead: false,
+                        })),
+                    ];
                 }
 
                 state.currentPage = page;
                 state.loading = false;
 
-                saveToLocalStorage(state.emailList);
+                saveToSessionStorage(state.emailList);
             })
             .addCase(fetchEmails.rejected, (state, action) => {
                 state.loading = false;

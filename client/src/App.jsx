@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Filter from "./components/Filter";
 import EmailList from "./components/EmailList";
 import LoadMoreButton from "./components/LoadMoreButton";
-import { loadFromLocalStorage } from "./store/emailSlice";
+import { loadFromSessionStorage } from "./store/emailSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ function App() {
   };
 
   useEffect(() => {
-    const emailList = loadFromLocalStorage();
+    const emailList = loadFromSessionStorage();
     if (!emailList) {
       dispatch(fetchEmails(1));
     }
