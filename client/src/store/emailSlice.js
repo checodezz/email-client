@@ -62,8 +62,6 @@ const emailSlice = createSlice({
             })
             .addCase(fetchEmails.fulfilled, (state, action) => {
                 const { emails, page } = action.payload;
-
-
                 if (page === 1) {
                     state.emailList = emails.map((email) => ({
                         ...email,

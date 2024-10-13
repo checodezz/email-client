@@ -23,7 +23,7 @@ function App() {
 
   useEffect(() => {
     const emailList = loadFromLocalStorage();
-    if (emailList.length === 0) {
+    if (!emailList) {
       dispatch(fetchEmails(1));
     }
   }, [dispatch]);
