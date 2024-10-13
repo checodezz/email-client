@@ -29,13 +29,17 @@ const EmailDetails = ({ emailId }) => {
     <div className="row">
       <div className="col-md-1 d-flex mt-4 ms-3">
         <div
-          className="bg-danger text-white rounded-circle d-flex align-items-center justify-content-center"
-          style={{ width: "40px", height: "40px", fontSize: 23 }}
+          className="text-white rounded-circle d-flex align-items-center justify-content-center"
+          style={{
+            width: "40px",
+            height: "40px",
+            fontSize: 23,
+            background: "#e54065",
+          }}
         >
           {senderInitial}
         </div>
       </div>
-      {/* Text Contents Section */}
       <div className="col-md-10 mt-4">
         <div className="d-flex justify-content-between align-items-center">
           <h4 className="mb-3">{email?.subject}</h4>

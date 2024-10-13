@@ -11,7 +11,11 @@ const EmailList = ({ activeFilter }) => {
 
   const handleEmailClick = (email) => {
     setSelectedEmail(email);
-    dispatch(markAsRead(email.id)); // Ensure correct email ID is passed to mark it as read
+    dispatch(markAsRead(email.id));
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   const truncateText = (text, maxLength) => {
@@ -25,11 +29,11 @@ const EmailList = ({ activeFilter }) => {
     setSelectedEmail(null);
   };
 
-  // Filter the emails based on the active filter
   const filteredEmails = emailList.filter((email) => {
-    if (activeFilter === "Unread") return !email.isRead;
-    if (activeFilter === "Read") return email.isRead;
+    if (activeFilter === "All") return true;
     if (activeFilter === "Favorites") return email.isFavorite;
+    if (activeFilter === "Read") return email.isRead;
+    if (activeFilter === "Unread") return !email.isRead;
     return true;
   });
 
@@ -50,7 +54,7 @@ const EmailList = ({ activeFilter }) => {
                 onClick={() => handleEmailClick(email)}
                 style={{
                   cursor: "pointer",
-                  backgroundColor: email.isRead ? "#f2f2f2" : "white", // Change background color based on read status
+                  backgroundColor: email.isRead ? "#f2f2f2" : "white",
                 }}
               >
                 <figure
@@ -107,7 +111,7 @@ const EmailList = ({ activeFilter }) => {
               onClick={() => handleEmailClick(email)}
               style={{
                 cursor: "pointer",
-                backgroundColor: email.isRead ? "#f2f2f2" : "white", // Change background color based on read status
+                backgroundColor: email.isRead ? "#f2f2f2" : "white",
               }}
             >
               <figure
@@ -147,10 +151,11 @@ const EmailList = ({ activeFilter }) => {
       )}
       {selectedEmail && (
         <button
-          className="btn btn-outline-secondary position-fixed top-0 end-0 m-3 mt-4 me-5"
+          className="btn btn-danger  position-fixed top-0 end-0 m-3 mt-4 me-5"
           onClick={handleResetClick}
+          style={{ borderRadius: "50%", background: "#e54064" }}
         >
-          Close Details
+          X
         </button>
       )}
     </div>

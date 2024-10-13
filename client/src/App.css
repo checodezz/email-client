@@ -11,7 +11,7 @@
 
 .filter-option {
   cursor: pointer;
-  color: gray;
+  color: black;
   padding: 1px 10px;
   border-radius: 100px;
   transition: background-color 0.3s, color 0.3s;
@@ -23,9 +23,6 @@
 
 .filter-option.active {
   background-color: #e0e0e0;
-  color: black;
-  border: 1px solid gray;
-  /* font-weight: bold; */
 }
 
 .email-card {
@@ -46,7 +43,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #dc3545;
+  background-color: #e54065;
   color: #fff;
   font-size: 1.5rem;
   display: flex;
@@ -96,7 +93,7 @@
 }
 
 .custom-button {
-  background-color: #e54046;
+  background-color: #e54064;
   border: none;
   color: white;
   padding: 5px 15px;
