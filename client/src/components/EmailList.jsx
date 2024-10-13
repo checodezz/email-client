@@ -1,6 +1,6 @@
 import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import EmailDetails from "./EmailDetails";
 import { markAsRead } from "../store/emailSlice";
 
