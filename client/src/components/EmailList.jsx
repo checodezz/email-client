@@ -38,7 +38,7 @@ const EmailList = ({ activeFilter }) => {
   });
 
   return (
-    <div className="container-fluid mt-4" aria-labelledby="email-list-title">
+    <div className="container-fluid mt-2" aria-labelledby="email-list-title">
       <h2 id="email-list-title" className="visually-hidden">
         Email List
       </h2>
